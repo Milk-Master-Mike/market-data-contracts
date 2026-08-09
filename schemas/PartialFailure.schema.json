@@ -1,0 +1,91 @@
+{
+  "$defs": {
+    "FailureCode": {
+      "enum": [
+        "unavailable",
+        "timeout",
+        "rate_limited",
+        "blocked",
+        "malformed",
+        "not_found",
+        "stale",
+        "cancelled",
+        "internal"
+      ],
+      "title": "FailureCode",
+      "type": "string"
+    }
+  },
+  "$id": "https://raw.githubusercontent.com/Milk-Master-Mike/market-data-contracts/v0.1.0/schemas/PartialFailure.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "$ref": "#/$defs/FailureCode"
+    },
+    "dataset": {
+      "minLength": 1,
+      "title": "Dataset",
+      "type": "string"
+    },
+    "failure_id": {
+      "minLength": 1,
+      "title": "Failure Id",
+      "type": "string"
+    },
+    "message": {
+      "minLength": 1,
+      "title": "Message",
+      "type": "string"
+    },
+    "occurred_at": {
+      "format": "date-time",
+      "title": "Occurred At",
+      "type": "string"
+    },
+    "retryable": {
+      "title": "Retryable",
+      "type": "boolean"
+    },
+    "source_name": {
+      "minLength": 1,
+      "title": "Source Name",
+      "type": "string"
+    },
+    "source_url": {
+      "anyOf": [
+        {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Url"
+    },
+    "warnings": {
+      "default": [],
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "failure_id",
+    "source_name",
+    "dataset",
+    "code",
+    "message",
+    "occurred_at",
+    "retryable"
+  ],
+  "title": "PartialFailure",
+  "type": "object",
+  "x-contract-version": "0.1.0"
+}

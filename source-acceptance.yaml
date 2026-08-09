@@ -1,0 +1,53 @@
+version: 1
+policy:
+  require_public_documentation: true
+  require_source_url_per_record: true
+  require_rate_limit_strategy: true
+  require_redistribution_review: true
+  prohibit:
+    - captcha_bypass
+    - authentication_bypass
+    - paywall_bypass
+    - credential_capture
+    - unlicensed_exchange_price_redistribution
+sources:
+  sec_edgar:
+    status: accepted
+    owner: U.S. Securities and Exchange Commission
+    access: public_api
+    documentation: https://www.sec.gov/search-filings/edgar-application-programming-interfaces
+    requirements:
+      - identified_user_agent
+      - bounded_concurrency
+      - caching
+      - fair_access_rate_limits
+  nasdaq_trader_symbol_directory:
+    status: accepted
+    owner: Nasdaq Trader
+    access: public_download
+    documentation: https://www.nasdaqtrader.com/trader.aspx?id=symboldirdefs
+    requirements:
+      - retain_retrieval_timestamp
+      - review_redistribution_terms
+  finra_daily_short_volume:
+    status: accepted_with_warning
+    owner: FINRA
+    access: public_download
+    documentation: https://www.finra.org/finra-data/browse-catalog/short-sale-volume-data/daily-short-sale-volume-files
+    requirements:
+      - label_as_daily_short_volume
+      - never_represent_as_consolidated_short_interest
+  alpha_vantage:
+    status: optional_byok
+    owner: Alpha Vantage
+    access: authenticated_api
+    documentation: https://www.alphavantage.co/documentation/
+    requirements:
+      - credentials_from_runtime_secret_only
+      - respect_provider_terms_and_limits
+  cme_and_ice_prices:
+    status: prohibited_without_license
+    access: excluded
+    requirements:
+      - do_not_scrape_prices_or_settlements
+

@@ -1,0 +1,230 @@
+{
+  "$defs": {
+    "CatalystCategory": {
+      "enum": [
+        "filing",
+        "earnings",
+        "guidance",
+        "capital",
+        "governance",
+        "product",
+        "regulatory",
+        "macro",
+        "other"
+      ],
+      "title": "CatalystCategory",
+      "type": "string"
+    },
+    "SourceEvidence": {
+      "additionalProperties": false,
+      "description": "Required provenance and quality metadata for a normalized fact.",
+      "properties": {
+        "confidence": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,6}0*$",
+              "type": "string"
+            }
+          ],
+          "description": "Evidence quality from 0 to 1; never investment-performance probability.",
+          "title": "Confidence"
+        },
+        "effective_date": {
+          "format": "date",
+          "title": "Effective Date",
+          "type": "string"
+        },
+        "evidence_id": {
+          "description": "Stable ID unique within a research run.",
+          "minLength": 1,
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "excerpt": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional short evidence excerpt; never a republished full article.",
+          "title": "Excerpt"
+        },
+        "parser_version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+(?:[-+][0-9A-Za-z.-]+)?$",
+          "title": "Parser Version",
+          "type": "string"
+        },
+        "retrieved_at": {
+          "format": "date-time",
+          "title": "Retrieved At",
+          "type": "string"
+        },
+        "source_name": {
+          "minLength": 1,
+          "title": "Source Name",
+          "type": "string"
+        },
+        "source_record_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Record Id"
+        },
+        "source_url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Source Url",
+          "type": "string"
+        },
+        "units": {
+          "description": "Explicit units, such as shares, USD, ratio, or not_applicable.",
+          "minLength": 1,
+          "title": "Units",
+          "type": "string"
+        },
+        "warnings": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "source_name",
+        "source_url",
+        "retrieved_at",
+        "effective_date",
+        "units",
+        "parser_version",
+        "confidence"
+      ],
+      "title": "SourceEvidence",
+      "type": "object"
+    }
+  },
+  "$id": "https://raw.githubusercontent.com/Milk-Master-Mike/market-data-contracts/v0.1.0/schemas/NewsEvent.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "canonical_url": {
+      "format": "uri",
+      "maxLength": 2083,
+      "minLength": 1,
+      "title": "Canonical Url",
+      "type": "string"
+    },
+    "catalyst_categories": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/CatalystCategory"
+      },
+      "title": "Catalyst Categories",
+      "type": "array"
+    },
+    "company_ids": {
+      "default": [],
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Company Ids",
+      "type": "array"
+    },
+    "content_hash": {
+      "anyOf": [
+        {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Content Hash"
+    },
+    "duplicate_cluster_id": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Duplicate Cluster Id"
+    },
+    "event_id": {
+      "minLength": 1,
+      "title": "Event Id",
+      "type": "string"
+    },
+    "evidence": {
+      "$ref": "#/$defs/SourceEvidence"
+    },
+    "instrument_ids": {
+      "default": [],
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Instrument Ids",
+      "type": "array"
+    },
+    "kind": {
+      "const": "news_event",
+      "default": "news_event",
+      "title": "Kind",
+      "type": "string"
+    },
+    "published_at": {
+      "format": "date-time",
+      "title": "Published At",
+      "type": "string"
+    },
+    "publisher": {
+      "minLength": 1,
+      "title": "Publisher",
+      "type": "string"
+    },
+    "title": {
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    }
+  },
+  "required": [
+    "event_id",
+    "canonical_url",
+    "title",
+    "publisher",
+    "published_at",
+    "evidence"
+  ],
+  "title": "NewsEvent",
+  "type": "object",
+  "x-contract-version": "0.1.0"
+}

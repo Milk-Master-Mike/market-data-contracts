@@ -1,0 +1,56 @@
+{
+  "kind": "horizon_assessment",
+  "assessment_id": "assessment-acme-short-1",
+  "company_id": "sec:0000000001",
+  "horizon_label": "short term",
+  "trading_days": 10,
+  "calendar_months": null,
+  "calendar_years": null,
+  "research_relevance_score": "62.5",
+  "evidence_strength_score": "70",
+  "freshness_score": "80",
+  "components": [
+    {
+      "name": "filing recency",
+      "weight": "0.6",
+      "value": "75",
+      "contribution": "45",
+      "evidence_ids": [
+        "ev-filing-1"
+      ],
+      "explanation": "A recent annual filing is relevant to the configured research window."
+    },
+    {
+      "name": "float evidence",
+      "weight": "0.4",
+      "value": "43.75",
+      "contribution": "17.5",
+      "evidence_ids": [
+        "ev-float-1"
+      ],
+      "explanation": "The float fact is dated and receives reduced freshness weight."
+    }
+  ],
+  "conflicts": [],
+  "missing_inputs": [
+    "current price provider disabled"
+  ],
+  "calculation_version": "0.1.0",
+  "explanation": "Evidence relevance is moderate; missing price data and dated float evidence reduce confidence.",
+  "evidence": {
+    "evidence_id": "ev-assessment-1",
+    "source_name": "market-horizon-engine",
+    "source_url": "https://github.com/Milk-Master-Mike/market-horizon-engine",
+    "retrieved_at": "2026-01-15T15:00:02Z",
+    "effective_date": "2026-01-15",
+    "units": "score_0_to_100",
+    "parser_version": "0.1.0",
+    "confidence": "0.7",
+    "warnings": [
+      "Research relevance only; no expected return or trading instruction."
+    ],
+    "source_record_id": null,
+    "excerpt": null
+  }
+}
+

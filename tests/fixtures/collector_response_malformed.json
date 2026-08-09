@@ -1,0 +1,30 @@
+{
+  "contract_version": "0.1.0",
+  "run": {
+    "run_id": "55555555-5555-4555-8555-555555555555",
+    "collector": "broken-fixture-collector",
+    "collector_version": "0.1.0",
+    "contract_version": "0.1.0",
+    "mode": "fixture",
+    "status": "succeeded",
+    "started_at": "2026-01-15T18:00:00Z",
+    "finished_at": "2026-01-15T18:00:01Z",
+    "query": {"kind": "ticker", "value": "ACME"},
+    "requested_datasets": ["quotes"],
+    "source_names": ["Synthetic malformed source"],
+    "warnings": []
+  },
+  "records": [
+    {
+      "kind": "quote_snapshot",
+      "snapshot_id": "quote-acme-1",
+      "instrument_id": "xnas:ACME",
+      "as_of": "2026-01-15T18:00:00Z",
+      "currency": "USD",
+      "price": "10.25",
+      "adjusted": false
+    }
+  ],
+  "partial_failures": []
+}
+

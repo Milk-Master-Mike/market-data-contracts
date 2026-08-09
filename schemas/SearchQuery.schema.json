@@ -1,0 +1,32 @@
+{
+  "$defs": {
+    "QueryKind": {
+      "enum": [
+        "ticker",
+        "company_name",
+        "identifier"
+      ],
+      "title": "QueryKind",
+      "type": "string"
+    }
+  },
+  "$id": "https://raw.githubusercontent.com/Milk-Master-Mike/market-data-contracts/v0.1.0/schemas/SearchQuery.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "$ref": "#/$defs/QueryKind"
+    },
+    "value": {
+      "minLength": 1,
+      "title": "Value",
+      "type": "string"
+    }
+  },
+  "required": [
+    "kind",
+    "value"
+  ],
+  "title": "SearchQuery",
+  "type": "object",
+  "x-contract-version": "0.1.0"
+}

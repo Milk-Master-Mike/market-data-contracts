@@ -1,0 +1,144 @@
+{
+  "$defs": {
+    "QueryKind": {
+      "enum": [
+        "ticker",
+        "company_name",
+        "identifier"
+      ],
+      "title": "QueryKind",
+      "type": "string"
+    },
+    "RunMode": {
+      "enum": [
+        "live",
+        "fixture"
+      ],
+      "title": "RunMode",
+      "type": "string"
+    },
+    "RunStatus": {
+      "enum": [
+        "pending",
+        "running",
+        "succeeded",
+        "partial",
+        "failed",
+        "cancelled"
+      ],
+      "title": "RunStatus",
+      "type": "string"
+    },
+    "SearchQuery": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/QueryKind"
+        },
+        "value": {
+          "minLength": 1,
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "SearchQuery",
+      "type": "object"
+    }
+  },
+  "$id": "https://raw.githubusercontent.com/Milk-Master-Mike/market-data-contracts/v0.1.0/schemas/ScrapeRun.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "collector": {
+      "minLength": 1,
+      "title": "Collector",
+      "type": "string"
+    },
+    "collector_version": {
+      "minLength": 1,
+      "title": "Collector Version",
+      "type": "string"
+    },
+    "contract_version": {
+      "const": "0.1.0",
+      "default": "0.1.0",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "finished_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Finished At"
+    },
+    "mode": {
+      "$ref": "#/$defs/RunMode"
+    },
+    "query": {
+      "$ref": "#/$defs/SearchQuery"
+    },
+    "requested_datasets": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Requested Datasets",
+      "type": "array"
+    },
+    "run_id": {
+      "format": "uuid",
+      "title": "Run Id",
+      "type": "string"
+    },
+    "source_names": {
+      "default": [],
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Source Names",
+      "type": "array"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/RunStatus"
+    },
+    "warnings": {
+      "default": [],
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "run_id",
+    "collector",
+    "collector_version",
+    "mode",
+    "status",
+    "started_at",
+    "query",
+    "requested_datasets"
+  ],
+  "title": "ScrapeRun",
+  "type": "object",
+  "x-contract-version": "0.1.0"
+}

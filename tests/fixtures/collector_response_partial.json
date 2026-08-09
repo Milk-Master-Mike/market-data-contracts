@@ -1,0 +1,59 @@
+{
+  "contract_version": "0.1.0",
+  "run": {
+    "run_id": "44444444-4444-4444-8444-444444444444",
+    "collector": "market-news-scraper",
+    "collector_version": "0.1.0",
+    "contract_version": "0.1.0",
+    "mode": "fixture",
+    "status": "partial",
+    "started_at": "2026-01-15T17:00:00Z",
+    "finished_at": "2026-01-15T17:00:02Z",
+    "query": {"kind": "ticker", "value": "ACME"},
+    "requested_datasets": ["sec_events", "issuer_ir_feed"],
+    "source_names": ["SEC filing feed", "Acme issuer IR feed"],
+    "warnings": []
+  },
+  "records": [
+    {
+      "kind": "news_event",
+      "event_id": "news-sec-acme-1",
+      "canonical_url": "https://www.sec.gov/Archives/edgar/data/1/example8k.htm",
+      "title": "Acme Example Corporation files Form 8-K",
+      "publisher": "U.S. Securities and Exchange Commission",
+      "published_at": "2026-01-15T14:00:00Z",
+      "company_ids": ["sec:0000000001"],
+      "instrument_ids": ["xnas:ACME"],
+      "catalyst_categories": ["filing"],
+      "duplicate_cluster_id": "cluster-acme-8k-1",
+      "content_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence": {
+        "evidence_id": "ev-news-1",
+        "source_name": "SEC filing feed",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1/example8k.htm",
+        "retrieved_at": "2026-01-15T17:00:00Z",
+        "effective_date": "2026-01-15",
+        "units": "not_applicable",
+        "parser_version": "0.1.0",
+        "confidence": "1",
+        "warnings": [],
+        "source_record_id": "example8k",
+        "excerpt": "Synthetic short excerpt for deterministic parser testing."
+      }
+    }
+  ],
+  "partial_failures": [
+    {
+      "failure_id": "failure-ir-1",
+      "source_name": "Acme issuer IR feed",
+      "dataset": "issuer_ir_feed",
+      "code": "malformed",
+      "message": "Synthetic malformed XML fixture.",
+      "occurred_at": "2026-01-15T17:00:02Z",
+      "retryable": false,
+      "source_url": "https://investor.example.com/acme/feed.xml",
+      "warnings": []
+    }
+  ]
+}
+

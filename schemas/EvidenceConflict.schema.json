@@ -1,0 +1,33 @@
+{
+  "$id": "https://raw.githubusercontent.com/Milk-Master-Mike/market-data-contracts/v0.1.0/schemas/EvidenceConflict.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "description": {
+      "minLength": 1,
+      "title": "Description",
+      "type": "string"
+    },
+    "effect": {
+      "minLength": 1,
+      "title": "Effect",
+      "type": "string"
+    },
+    "evidence_ids": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 2,
+      "title": "Evidence Ids",
+      "type": "array"
+    }
+  },
+  "required": [
+    "description",
+    "evidence_ids",
+    "effect"
+  ],
+  "title": "EvidenceConflict",
+  "type": "object",
+  "x-contract-version": "0.1.0"
+}

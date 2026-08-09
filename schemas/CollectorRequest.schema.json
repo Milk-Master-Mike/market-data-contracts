@@ -1,0 +1,281 @@
+{
+  "$defs": {
+    "Company": {
+      "additionalProperties": false,
+      "properties": {
+        "aliases": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Aliases",
+          "type": "array"
+        },
+        "cik": {
+          "anyOf": [
+            {
+              "pattern": "^\\d{10}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cik"
+        },
+        "company_id": {
+          "minLength": 1,
+          "title": "Company Id",
+          "type": "string"
+        },
+        "evidence": {
+          "$ref": "#/$defs/SourceEvidence"
+        },
+        "jurisdiction": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 2,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Jurisdiction"
+        },
+        "kind": {
+          "const": "company",
+          "default": "company",
+          "title": "Kind",
+          "type": "string"
+        },
+        "legal_name": {
+          "minLength": 1,
+          "title": "Legal Name",
+          "type": "string"
+        },
+        "lei": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Z0-9]{20}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lei"
+        }
+      },
+      "required": [
+        "company_id",
+        "legal_name",
+        "evidence"
+      ],
+      "title": "Company",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "QueryKind": {
+      "enum": [
+        "ticker",
+        "company_name",
+        "identifier"
+      ],
+      "title": "QueryKind",
+      "type": "string"
+    },
+    "SearchQuery": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/QueryKind"
+        },
+        "value": {
+          "minLength": 1,
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "SearchQuery",
+      "type": "object"
+    },
+    "SourceEvidence": {
+      "additionalProperties": false,
+      "description": "Required provenance and quality metadata for a normalized fact.",
+      "properties": {
+        "confidence": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,6}0*$",
+              "type": "string"
+            }
+          ],
+          "description": "Evidence quality from 0 to 1; never investment-performance probability.",
+          "title": "Confidence"
+        },
+        "effective_date": {
+          "format": "date",
+          "title": "Effective Date",
+          "type": "string"
+        },
+        "evidence_id": {
+          "description": "Stable ID unique within a research run.",
+          "minLength": 1,
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "excerpt": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional short evidence excerpt; never a republished full article.",
+          "title": "Excerpt"
+        },
+        "parser_version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+(?:[-+][0-9A-Za-z.-]+)?$",
+          "title": "Parser Version",
+          "type": "string"
+        },
+        "retrieved_at": {
+          "format": "date-time",
+          "title": "Retrieved At",
+          "type": "string"
+        },
+        "source_name": {
+          "minLength": 1,
+          "title": "Source Name",
+          "type": "string"
+        },
+        "source_record_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Record Id"
+        },
+        "source_url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Source Url",
+          "type": "string"
+        },
+        "units": {
+          "description": "Explicit units, such as shares, USD, ratio, or not_applicable.",
+          "minLength": 1,
+          "title": "Units",
+          "type": "string"
+        },
+        "warnings": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "source_name",
+        "source_url",
+        "retrieved_at",
+        "effective_date",
+        "units",
+        "parser_version",
+        "confidence"
+      ],
+      "title": "SourceEvidence",
+      "type": "object"
+    }
+  },
+  "$id": "https://raw.githubusercontent.com/Milk-Master-Mike/market-data-contracts/v0.1.0/schemas/CollectorRequest.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "as_of": {
+      "format": "date-time",
+      "title": "As Of",
+      "type": "string"
+    },
+    "contract_version": {
+      "const": "0.1.0",
+      "default": "0.1.0",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "query": {
+      "$ref": "#/$defs/SearchQuery"
+    },
+    "request_id": {
+      "format": "uuid",
+      "title": "Request Id",
+      "type": "string"
+    },
+    "requested_datasets": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Requested Datasets",
+      "type": "array"
+    },
+    "resolved_entity": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Company"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "source_settings": {
+      "additionalProperties": {
+        "$ref": "#/$defs/JsonValue"
+      },
+      "description": "Non-secret source behavior only; credentials come from runtime secrets.",
+      "title": "Source Settings",
+      "type": "object"
+    }
+  },
+  "required": [
+    "request_id",
+    "query",
+    "requested_datasets",
+    "as_of"
+  ],
+  "title": "CollectorRequest",
+  "type": "object",
+  "x-contract-version": "0.1.0"
+}

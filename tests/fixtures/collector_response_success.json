@@ -1,0 +1,44 @@
+{
+  "contract_version": "0.1.0",
+  "run": {
+    "run_id": "33333333-3333-4333-8333-333333333333",
+    "collector": "market-structure-scraper",
+    "collector_version": "0.1.0",
+    "contract_version": "0.1.0",
+    "mode": "fixture",
+    "status": "succeeded",
+    "started_at": "2026-01-15T16:00:00Z",
+    "finished_at": "2026-01-15T16:00:01Z",
+    "query": {"kind": "ticker", "value": "ACME"},
+    "requested_datasets": ["instrument_identity"],
+    "source_names": ["Nasdaq Trader symbol directory"],
+    "warnings": []
+  },
+  "records": [
+    {
+      "kind": "instrument",
+      "instrument_id": "xnas:ACME",
+      "company_id": "sec:0000000001",
+      "symbol": "ACME",
+      "exchange": "XNAS",
+      "security_type": "common_stock",
+      "currency": "USD",
+      "active": true,
+      "evidence": {
+        "evidence_id": "ev-instrument-1",
+        "source_name": "Nasdaq Trader symbol directory",
+        "source_url": "https://www.nasdaqtrader.com/dynamic/symdir/nasdaqlisted.txt",
+        "retrieved_at": "2026-01-15T16:00:00Z",
+        "effective_date": "2026-01-15",
+        "units": "not_applicable",
+        "parser_version": "0.1.0",
+        "confidence": "0.95",
+        "warnings": [],
+        "source_record_id": "ACME",
+        "excerpt": null
+      }
+    }
+  ],
+  "partial_failures": []
+}
+

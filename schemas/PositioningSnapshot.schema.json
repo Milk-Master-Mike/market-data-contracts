@@ -1,0 +1,291 @@
+{
+  "$defs": {
+    "CorrectionStatus": {
+      "enum": [
+        "original",
+        "corrected",
+        "superseded",
+        "unknown"
+      ],
+      "title": "CorrectionStatus",
+      "type": "string"
+    },
+    "SourceEvidence": {
+      "additionalProperties": false,
+      "description": "Required provenance and quality metadata for a normalized fact.",
+      "properties": {
+        "confidence": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,6}0*$",
+              "type": "string"
+            }
+          ],
+          "description": "Evidence quality from 0 to 1; never investment-performance probability.",
+          "title": "Confidence"
+        },
+        "effective_date": {
+          "format": "date",
+          "title": "Effective Date",
+          "type": "string"
+        },
+        "evidence_id": {
+          "description": "Stable ID unique within a research run.",
+          "minLength": 1,
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "excerpt": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional short evidence excerpt; never a republished full article.",
+          "title": "Excerpt"
+        },
+        "parser_version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+(?:[-+][0-9A-Za-z.-]+)?$",
+          "title": "Parser Version",
+          "type": "string"
+        },
+        "retrieved_at": {
+          "format": "date-time",
+          "title": "Retrieved At",
+          "type": "string"
+        },
+        "source_name": {
+          "minLength": 1,
+          "title": "Source Name",
+          "type": "string"
+        },
+        "source_record_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Record Id"
+        },
+        "source_url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Source Url",
+          "type": "string"
+        },
+        "units": {
+          "description": "Explicit units, such as shares, USD, ratio, or not_applicable.",
+          "minLength": 1,
+          "title": "Units",
+          "type": "string"
+        },
+        "warnings": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "source_name",
+        "source_url",
+        "retrieved_at",
+        "effective_date",
+        "units",
+        "parser_version",
+        "confidence"
+      ],
+      "title": "SourceEvidence",
+      "type": "object"
+    }
+  },
+  "$id": "https://raw.githubusercontent.com/Milk-Master-Mike/market-data-contracts/v0.1.0/schemas/PositioningSnapshot.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "contract_code": {
+      "minLength": 1,
+      "title": "Contract Code",
+      "type": "string"
+    },
+    "correction_status": {
+      "$ref": "#/$defs/CorrectionStatus",
+      "default": "unknown"
+    },
+    "evidence": {
+      "$ref": "#/$defs/SourceEvidence"
+    },
+    "kind": {
+      "const": "positioning_snapshot",
+      "default": "positioning_snapshot",
+      "title": "Kind",
+      "type": "string"
+    },
+    "long_percent_open_interest": {
+      "anyOf": [
+        {
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,6}0*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Long Percent Open Interest"
+    },
+    "long_positions": {
+      "anyOf": [
+        {
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Long Positions"
+    },
+    "market_name": {
+      "minLength": 1,
+      "title": "Market Name",
+      "type": "string"
+    },
+    "open_interest": {
+      "anyOf": [
+        {
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Open Interest"
+    },
+    "publication_date": {
+      "format": "date",
+      "title": "Publication Date",
+      "type": "string"
+    },
+    "report_date": {
+      "format": "date",
+      "title": "Report Date",
+      "type": "string"
+    },
+    "report_family": {
+      "minLength": 1,
+      "title": "Report Family",
+      "type": "string"
+    },
+    "reporting_lag_days": {
+      "minimum": 0,
+      "title": "Reporting Lag Days",
+      "type": "integer"
+    },
+    "short_percent_open_interest": {
+      "anyOf": [
+        {
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,6}0*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Short Percent Open Interest"
+    },
+    "short_positions": {
+      "anyOf": [
+        {
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Short Positions"
+    },
+    "snapshot_id": {
+      "minLength": 1,
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "spreading_positions": {
+      "anyOf": [
+        {
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Spreading Positions"
+    }
+  },
+  "required": [
+    "snapshot_id",
+    "market_name",
+    "report_family",
+    "contract_code",
+    "report_date",
+    "publication_date",
+    "reporting_lag_days",
+    "evidence"
+  ],
+  "title": "PositioningSnapshot",
+  "type": "object",
+  "x-contract-version": "0.1.0"
+}

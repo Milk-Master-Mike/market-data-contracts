@@ -1,0 +1,1473 @@
+{
+  "$defs": {
+    "CatalystCategory": {
+      "enum": [
+        "filing",
+        "earnings",
+        "guidance",
+        "capital",
+        "governance",
+        "product",
+        "regulatory",
+        "macro",
+        "other"
+      ],
+      "title": "CatalystCategory",
+      "type": "string"
+    },
+    "Company": {
+      "additionalProperties": false,
+      "properties": {
+        "aliases": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Aliases",
+          "type": "array"
+        },
+        "cik": {
+          "anyOf": [
+            {
+              "pattern": "^\\d{10}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cik"
+        },
+        "company_id": {
+          "minLength": 1,
+          "title": "Company Id",
+          "type": "string"
+        },
+        "evidence": {
+          "$ref": "#/$defs/SourceEvidence"
+        },
+        "jurisdiction": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "minLength": 2,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Jurisdiction"
+        },
+        "kind": {
+          "const": "company",
+          "default": "company",
+          "title": "Kind",
+          "type": "string"
+        },
+        "legal_name": {
+          "minLength": 1,
+          "title": "Legal Name",
+          "type": "string"
+        },
+        "lei": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Z0-9]{20}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lei"
+        }
+      },
+      "required": [
+        "company_id",
+        "legal_name",
+        "evidence"
+      ],
+      "title": "Company",
+      "type": "object"
+    },
+    "CorrectionStatus": {
+      "enum": [
+        "original",
+        "corrected",
+        "superseded",
+        "unknown"
+      ],
+      "title": "CorrectionStatus",
+      "type": "string"
+    },
+    "EvidenceConflict": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "effect": {
+          "minLength": 1,
+          "title": "Effect",
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 2,
+          "title": "Evidence Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "description",
+        "evidence_ids",
+        "effect"
+      ],
+      "title": "EvidenceConflict",
+      "type": "object"
+    },
+    "FailureCode": {
+      "enum": [
+        "unavailable",
+        "timeout",
+        "rate_limited",
+        "blocked",
+        "malformed",
+        "not_found",
+        "stale",
+        "cancelled",
+        "internal"
+      ],
+      "title": "FailureCode",
+      "type": "string"
+    },
+    "FilingEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "accepted_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Accepted At"
+        },
+        "accession_number": {
+          "pattern": "^\\d{10}-\\d{2}-\\d{6}$",
+          "title": "Accession Number",
+          "type": "string"
+        },
+        "company_id": {
+          "minLength": 1,
+          "title": "Company Id",
+          "type": "string"
+        },
+        "event_tags": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Event Tags",
+          "type": "array"
+        },
+        "evidence": {
+          "$ref": "#/$defs/SourceEvidence"
+        },
+        "filed_date": {
+          "format": "date",
+          "title": "Filed Date",
+          "type": "string"
+        },
+        "filing_id": {
+          "minLength": 1,
+          "title": "Filing Id",
+          "type": "string"
+        },
+        "form": {
+          "minLength": 1,
+          "title": "Form",
+          "type": "string"
+        },
+        "kind": {
+          "const": "filing_event",
+          "default": "filing_event",
+          "title": "Kind",
+          "type": "string"
+        },
+        "primary_document_url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Primary Document Url",
+          "type": "string"
+        },
+        "report_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Report Date"
+        }
+      },
+      "required": [
+        "filing_id",
+        "company_id",
+        "accession_number",
+        "form",
+        "filed_date",
+        "primary_document_url",
+        "evidence"
+      ],
+      "title": "FilingEvent",
+      "type": "object"
+    },
+    "FloatMeasure": {
+      "enum": [
+        "issuer_reported_public_float",
+        "shares_outstanding",
+        "tradable_free_float",
+        "other"
+      ],
+      "title": "FloatMeasure",
+      "type": "string"
+    },
+    "FloatSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of_date": {
+          "format": "date",
+          "title": "As Of Date",
+          "type": "string"
+        },
+        "company_id": {
+          "minLength": 1,
+          "title": "Company Id",
+          "type": "string"
+        },
+        "currency": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Z]{3}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Currency"
+        },
+        "evidence": {
+          "$ref": "#/$defs/SourceEvidence"
+        },
+        "instrument_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Instrument Id"
+        },
+        "kind": {
+          "const": "float_snapshot",
+          "default": "float_snapshot",
+          "title": "Kind",
+          "type": "string"
+        },
+        "measure": {
+          "$ref": "#/$defs/FloatMeasure"
+        },
+        "methodology": {
+          "minLength": 1,
+          "title": "Methodology",
+          "type": "string"
+        },
+        "snapshot_id": {
+          "minLength": 1,
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "snapshot_id",
+        "company_id",
+        "measure",
+        "value",
+        "as_of_date",
+        "methodology",
+        "evidence"
+      ],
+      "title": "FloatSnapshot",
+      "type": "object"
+    },
+    "HorizonAssessment": {
+      "additionalProperties": false,
+      "properties": {
+        "assessment_id": {
+          "minLength": 1,
+          "title": "Assessment Id",
+          "type": "string"
+        },
+        "calculation_version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+(?:[-+][0-9A-Za-z.-]+)?$",
+          "title": "Calculation Version",
+          "type": "string"
+        },
+        "calendar_months": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Calendar Months"
+        },
+        "calendar_years": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Calendar Years"
+        },
+        "company_id": {
+          "minLength": 1,
+          "title": "Company Id",
+          "type": "string"
+        },
+        "components": {
+          "items": {
+            "$ref": "#/$defs/ScoreComponent"
+          },
+          "title": "Components",
+          "type": "array"
+        },
+        "conflicts": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/EvidenceConflict"
+          },
+          "title": "Conflicts",
+          "type": "array"
+        },
+        "evidence": {
+          "$ref": "#/$defs/SourceEvidence"
+        },
+        "evidence_strength_score": {
+          "anyOf": [
+            {
+              "maximum": 100.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,6}0*$",
+              "type": "string"
+            }
+          ],
+          "title": "Evidence Strength Score"
+        },
+        "explanation": {
+          "description": "Explains research evidence, never a buy/sell instruction or return forecast.",
+          "minLength": 1,
+          "title": "Explanation",
+          "type": "string"
+        },
+        "freshness_score": {
+          "anyOf": [
+            {
+              "maximum": 100.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,6}0*$",
+              "type": "string"
+            }
+          ],
+          "title": "Freshness Score"
+        },
+        "horizon_label": {
+          "minLength": 1,
+          "title": "Horizon Label",
+          "type": "string"
+        },
+        "kind": {
+          "const": "horizon_assessment",
+          "default": "horizon_assessment",
+          "title": "Kind",
+          "type": "string"
+        },
+        "missing_inputs": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Missing Inputs",
+          "type": "array"
+        },
+        "research_relevance_score": {
+          "anyOf": [
+            {
+              "maximum": 100.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,6}0*$",
+              "type": "string"
+            }
+          ],
+          "title": "Research Relevance Score"
+        },
+        "trading_days": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Trading Days"
+        }
+      },
+      "required": [
+        "assessment_id",
+        "company_id",
+        "horizon_label",
+        "research_relevance_score",
+        "evidence_strength_score",
+        "freshness_score",
+        "components",
+        "calculation_version",
+        "explanation",
+        "evidence"
+      ],
+      "title": "HorizonAssessment",
+      "type": "object"
+    },
+    "Instrument": {
+      "additionalProperties": false,
+      "properties": {
+        "active": {
+          "default": true,
+          "title": "Active",
+          "type": "boolean"
+        },
+        "company_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Company Id"
+        },
+        "currency": {
+          "default": "USD",
+          "pattern": "^[A-Z]{3}$",
+          "title": "Currency",
+          "type": "string"
+        },
+        "evidence": {
+          "$ref": "#/$defs/SourceEvidence"
+        },
+        "exchange": {
+          "minLength": 1,
+          "title": "Exchange",
+          "type": "string"
+        },
+        "instrument_id": {
+          "minLength": 1,
+          "title": "Instrument Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "instrument",
+          "default": "instrument",
+          "title": "Kind",
+          "type": "string"
+        },
+        "security_type": {
+          "$ref": "#/$defs/SecurityType"
+        },
+        "symbol": {
+          "maxLength": 32,
+          "minLength": 1,
+          "title": "Symbol",
+          "type": "string"
+        }
+      },
+      "required": [
+        "instrument_id",
+        "symbol",
+        "exchange",
+        "security_type",
+        "evidence"
+      ],
+      "title": "Instrument",
+      "type": "object"
+    },
+    "NewsEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "canonical_url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Canonical Url",
+          "type": "string"
+        },
+        "catalyst_categories": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/CatalystCategory"
+          },
+          "title": "Catalyst Categories",
+          "type": "array"
+        },
+        "company_ids": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Company Ids",
+          "type": "array"
+        },
+        "content_hash": {
+          "anyOf": [
+            {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Content Hash"
+        },
+        "duplicate_cluster_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Duplicate Cluster Id"
+        },
+        "event_id": {
+          "minLength": 1,
+          "title": "Event Id",
+          "type": "string"
+        },
+        "evidence": {
+          "$ref": "#/$defs/SourceEvidence"
+        },
+        "instrument_ids": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Instrument Ids",
+          "type": "array"
+        },
+        "kind": {
+          "const": "news_event",
+          "default": "news_event",
+          "title": "Kind",
+          "type": "string"
+        },
+        "published_at": {
+          "format": "date-time",
+          "title": "Published At",
+          "type": "string"
+        },
+        "publisher": {
+          "minLength": 1,
+          "title": "Publisher",
+          "type": "string"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_id",
+        "canonical_url",
+        "title",
+        "publisher",
+        "published_at",
+        "evidence"
+      ],
+      "title": "NewsEvent",
+      "type": "object"
+    },
+    "PartialFailure": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/FailureCode"
+        },
+        "dataset": {
+          "minLength": 1,
+          "title": "Dataset",
+          "type": "string"
+        },
+        "failure_id": {
+          "minLength": 1,
+          "title": "Failure Id",
+          "type": "string"
+        },
+        "message": {
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "occurred_at": {
+          "format": "date-time",
+          "title": "Occurred At",
+          "type": "string"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        },
+        "source_name": {
+          "minLength": 1,
+          "title": "Source Name",
+          "type": "string"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "format": "uri",
+              "maxLength": 2083,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        },
+        "warnings": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        }
+      },
+      "required": [
+        "failure_id",
+        "source_name",
+        "dataset",
+        "code",
+        "message",
+        "occurred_at",
+        "retryable"
+      ],
+      "title": "PartialFailure",
+      "type": "object"
+    },
+    "PositioningSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_code": {
+          "minLength": 1,
+          "title": "Contract Code",
+          "type": "string"
+        },
+        "correction_status": {
+          "$ref": "#/$defs/CorrectionStatus",
+          "default": "unknown"
+        },
+        "evidence": {
+          "$ref": "#/$defs/SourceEvidence"
+        },
+        "kind": {
+          "const": "positioning_snapshot",
+          "default": "positioning_snapshot",
+          "title": "Kind",
+          "type": "string"
+        },
+        "long_percent_open_interest": {
+          "anyOf": [
+            {
+              "maximum": 100.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,6}0*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Long Percent Open Interest"
+        },
+        "long_positions": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Long Positions"
+        },
+        "market_name": {
+          "minLength": 1,
+          "title": "Market Name",
+          "type": "string"
+        },
+        "open_interest": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Open Interest"
+        },
+        "publication_date": {
+          "format": "date",
+          "title": "Publication Date",
+          "type": "string"
+        },
+        "report_date": {
+          "format": "date",
+          "title": "Report Date",
+          "type": "string"
+        },
+        "report_family": {
+          "minLength": 1,
+          "title": "Report Family",
+          "type": "string"
+        },
+        "reporting_lag_days": {
+          "minimum": 0,
+          "title": "Reporting Lag Days",
+          "type": "integer"
+        },
+        "short_percent_open_interest": {
+          "anyOf": [
+            {
+              "maximum": 100.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,6}0*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Short Percent Open Interest"
+        },
+        "short_positions": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Short Positions"
+        },
+        "snapshot_id": {
+          "minLength": 1,
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "spreading_positions": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Spreading Positions"
+        }
+      },
+      "required": [
+        "snapshot_id",
+        "market_name",
+        "report_family",
+        "contract_code",
+        "report_date",
+        "publication_date",
+        "reporting_lag_days",
+        "evidence"
+      ],
+      "title": "PositioningSnapshot",
+      "type": "object"
+    },
+    "QueryKind": {
+      "enum": [
+        "ticker",
+        "company_name",
+        "identifier"
+      ],
+      "title": "QueryKind",
+      "type": "string"
+    },
+    "QuoteSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "adjusted": {
+          "default": false,
+          "title": "Adjusted",
+          "type": "boolean"
+        },
+        "as_of": {
+          "format": "date-time",
+          "title": "As Of",
+          "type": "string"
+        },
+        "close": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Close"
+        },
+        "currency": {
+          "pattern": "^[A-Z]{3}$",
+          "title": "Currency",
+          "type": "string"
+        },
+        "evidence": {
+          "$ref": "#/$defs/SourceEvidence"
+        },
+        "high": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "High"
+        },
+        "instrument_id": {
+          "minLength": 1,
+          "title": "Instrument Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "quote_snapshot",
+          "default": "quote_snapshot",
+          "title": "Kind",
+          "type": "string"
+        },
+        "low": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Low"
+        },
+        "open": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Open"
+        },
+        "price": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Price"
+        },
+        "snapshot_id": {
+          "minLength": 1,
+          "title": "Snapshot Id",
+          "type": "string"
+        },
+        "volume": {
+          "anyOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Volume"
+        }
+      },
+      "required": [
+        "snapshot_id",
+        "instrument_id",
+        "as_of",
+        "currency",
+        "evidence"
+      ],
+      "title": "QuoteSnapshot",
+      "type": "object"
+    },
+    "RunMode": {
+      "enum": [
+        "live",
+        "fixture"
+      ],
+      "title": "RunMode",
+      "type": "string"
+    },
+    "RunStatus": {
+      "enum": [
+        "pending",
+        "running",
+        "succeeded",
+        "partial",
+        "failed",
+        "cancelled"
+      ],
+      "title": "RunStatus",
+      "type": "string"
+    },
+    "ScoreComponent": {
+      "additionalProperties": false,
+      "properties": {
+        "contribution": {
+          "anyOf": [
+            {
+              "maximum": 100.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,6}0*$",
+              "type": "string"
+            }
+          ],
+          "title": "Contribution"
+        },
+        "evidence_ids": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "explanation": {
+          "minLength": 1,
+          "title": "Explanation",
+          "type": "string"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "maximum": 100.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,6}0*$",
+              "type": "string"
+            }
+          ],
+          "title": "Value"
+        },
+        "weight": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,6}0*$",
+              "type": "string"
+            }
+          ],
+          "title": "Weight"
+        }
+      },
+      "required": [
+        "name",
+        "weight",
+        "value",
+        "contribution",
+        "explanation"
+      ],
+      "title": "ScoreComponent",
+      "type": "object"
+    },
+    "ScrapeRun": {
+      "additionalProperties": false,
+      "properties": {
+        "collector": {
+          "minLength": 1,
+          "title": "Collector",
+          "type": "string"
+        },
+        "collector_version": {
+          "minLength": 1,
+          "title": "Collector Version",
+          "type": "string"
+        },
+        "contract_version": {
+          "const": "0.1.0",
+          "default": "0.1.0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "finished_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Finished At"
+        },
+        "mode": {
+          "$ref": "#/$defs/RunMode"
+        },
+        "query": {
+          "$ref": "#/$defs/SearchQuery"
+        },
+        "requested_datasets": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Requested Datasets",
+          "type": "array"
+        },
+        "run_id": {
+          "format": "uuid",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "source_names": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Source Names",
+          "type": "array"
+        },
+        "started_at": {
+          "format": "date-time",
+          "title": "Started At",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/RunStatus"
+        },
+        "warnings": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        }
+      },
+      "required": [
+        "run_id",
+        "collector",
+        "collector_version",
+        "mode",
+        "status",
+        "started_at",
+        "query",
+        "requested_datasets"
+      ],
+      "title": "ScrapeRun",
+      "type": "object"
+    },
+    "SearchQuery": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/QueryKind"
+        },
+        "value": {
+          "minLength": 1,
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "title": "SearchQuery",
+      "type": "object"
+    },
+    "SecurityType": {
+      "enum": [
+        "common_stock",
+        "preferred_stock",
+        "etf",
+        "adr",
+        "unit",
+        "warrant",
+        "fund",
+        "other"
+      ],
+      "title": "SecurityType",
+      "type": "string"
+    },
+    "SourceEvidence": {
+      "additionalProperties": false,
+      "description": "Required provenance and quality metadata for a normalized fact.",
+      "properties": {
+        "confidence": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,6}0*$",
+              "type": "string"
+            }
+          ],
+          "description": "Evidence quality from 0 to 1; never investment-performance probability.",
+          "title": "Confidence"
+        },
+        "effective_date": {
+          "format": "date",
+          "title": "Effective Date",
+          "type": "string"
+        },
+        "evidence_id": {
+          "description": "Stable ID unique within a research run.",
+          "minLength": 1,
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "excerpt": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Optional short evidence excerpt; never a republished full article.",
+          "title": "Excerpt"
+        },
+        "parser_version": {
+          "pattern": "^\\d+\\.\\d+\\.\\d+(?:[-+][0-9A-Za-z.-]+)?$",
+          "title": "Parser Version",
+          "type": "string"
+        },
+        "retrieved_at": {
+          "format": "date-time",
+          "title": "Retrieved At",
+          "type": "string"
+        },
+        "source_name": {
+          "minLength": 1,
+          "title": "Source Name",
+          "type": "string"
+        },
+        "source_record_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Record Id"
+        },
+        "source_url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Source Url",
+          "type": "string"
+        },
+        "units": {
+          "description": "Explicit units, such as shares, USD, ratio, or not_applicable.",
+          "minLength": 1,
+          "title": "Units",
+          "type": "string"
+        },
+        "warnings": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "source_name",
+        "source_url",
+        "retrieved_at",
+        "effective_date",
+        "units",
+        "parser_version",
+        "confidence"
+      ],
+      "title": "SourceEvidence",
+      "type": "object"
+    }
+  },
+  "$id": "https://raw.githubusercontent.com/Milk-Master-Mike/market-data-contracts/v0.1.0/schemas/CollectorResponse.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "0.1.0",
+      "default": "0.1.0",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "partial_failures": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PartialFailure"
+      },
+      "title": "Partial Failures",
+      "type": "array"
+    },
+    "records": {
+      "default": [],
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "company": "#/$defs/Company",
+            "filing_event": "#/$defs/FilingEvent",
+            "float_snapshot": "#/$defs/FloatSnapshot",
+            "horizon_assessment": "#/$defs/HorizonAssessment",
+            "instrument": "#/$defs/Instrument",
+            "news_event": "#/$defs/NewsEvent",
+            "positioning_snapshot": "#/$defs/PositioningSnapshot",
+            "quote_snapshot": "#/$defs/QuoteSnapshot"
+          },
+          "propertyName": "kind"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/Company"
+          },
+          {
+            "$ref": "#/$defs/Instrument"
+          },
+          {
+            "$ref": "#/$defs/FilingEvent"
+          },
+          {
+            "$ref": "#/$defs/FloatSnapshot"
+          },
+          {
+            "$ref": "#/$defs/QuoteSnapshot"
+          },
+          {
+            "$ref": "#/$defs/NewsEvent"
+          },
+          {
+            "$ref": "#/$defs/PositioningSnapshot"
+          },
+          {
+            "$ref": "#/$defs/HorizonAssessment"
+          }
+        ]
+      },
+      "title": "Records",
+      "type": "array"
+    },
+    "run": {
+      "$ref": "#/$defs/ScrapeRun"
+    }
+  },
+  "required": [
+    "run"
+  ],
+  "title": "CollectorResponse",
+  "type": "object",
+  "x-contract-version": "0.1.0"
+}

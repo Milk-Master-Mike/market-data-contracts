@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "fixtures": [
+    {
+      "path": "collector_response_success.json",
+      "classification": "synthetic",
+      "state": "normal",
+      "expected": "valid"
+    },
+    {
+      "path": "collector_response_partial.json",
+      "classification": "synthetic",
+      "state": "rate_limited_partial_result",
+      "expected": "valid"
+    },
+    {
+      "path": "collector_response_malformed.json",
+      "classification": "synthetic",
+      "state": "malformed_missing_provenance",
+      "expected": "invalid"
+    }
+  ]
+}
+

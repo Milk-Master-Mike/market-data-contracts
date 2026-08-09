@@ -1,0 +1,15 @@
+title = "market-data-contracts secret scanning"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Public documentation and deliberately fake fixture markers"
+paths = [
+  '''tests[\\/]fixtures[\\/]''',
+  '''\.env\.example$''',
+]
+regexes = [
+  '''EXAMPLE_NOT_A_SECRET''',
+]
+

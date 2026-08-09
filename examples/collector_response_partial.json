@@ -1,0 +1,122 @@
+{
+  "contract_version": "0.1.0",
+  "run": {
+    "run_id": "22222222-2222-4222-8222-222222222222",
+    "collector": "sec-filings-scraper",
+    "collector_version": "0.1.0",
+    "contract_version": "0.1.0",
+    "mode": "fixture",
+    "status": "partial",
+    "started_at": "2026-01-15T15:00:00Z",
+    "finished_at": "2026-01-15T15:00:01Z",
+    "query": {
+      "kind": "ticker",
+      "value": "ACME"
+    },
+    "requested_datasets": [
+      "company_identity",
+      "filings",
+      "shares_and_float"
+    ],
+    "source_names": [
+      "SEC submissions",
+      "SEC company facts"
+    ],
+    "warnings": []
+  },
+  "records": [
+    {
+      "kind": "company",
+      "company_id": "sec:0000000001",
+      "legal_name": "Acme Example Corporation",
+      "cik": "0000000001",
+      "lei": null,
+      "aliases": [
+        "Acme Example"
+      ],
+      "jurisdiction": "Delaware",
+      "evidence": {
+        "evidence_id": "ev-company-1",
+        "source_name": "SEC submissions",
+        "source_url": "https://data.sec.gov/submissions/CIK0000000001.json",
+        "retrieved_at": "2026-01-15T15:00:00Z",
+        "effective_date": "2026-01-15",
+        "units": "not_applicable",
+        "parser_version": "0.1.0",
+        "confidence": "1.0",
+        "warnings": [],
+        "source_record_id": "0000000001",
+        "excerpt": null
+      }
+    },
+    {
+      "kind": "filing_event",
+      "filing_id": "sec:0000000001:0000000001-26-000001",
+      "company_id": "sec:0000000001",
+      "accession_number": "0000000001-26-000001",
+      "form": "10-K",
+      "filed_date": "2026-01-10",
+      "report_date": "2025-12-31",
+      "accepted_at": "2026-01-10T21:15:00Z",
+      "primary_document_url": "https://www.sec.gov/Archives/edgar/data/1/example10k.htm",
+      "event_tags": [
+        "annual_report"
+      ],
+      "evidence": {
+        "evidence_id": "ev-filing-1",
+        "source_name": "SEC submissions",
+        "source_url": "https://data.sec.gov/submissions/CIK0000000001.json",
+        "retrieved_at": "2026-01-15T15:00:00Z",
+        "effective_date": "2026-01-10",
+        "units": "not_applicable",
+        "parser_version": "0.1.0",
+        "confidence": "1.0",
+        "warnings": [],
+        "source_record_id": "0000000001-26-000001",
+        "excerpt": null
+      }
+    },
+    {
+      "kind": "float_snapshot",
+      "snapshot_id": "sec:0000000001:public-float:2025-06-30",
+      "company_id": "sec:0000000001",
+      "instrument_id": null,
+      "measure": "issuer_reported_public_float",
+      "value": "125000000.00",
+      "as_of_date": "2025-06-30",
+      "currency": "USD",
+      "methodology": "Issuer-reported aggregate market value held by non-affiliates",
+      "evidence": {
+        "evidence_id": "ev-float-1",
+        "source_name": "SEC filing cover page",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1/example10k.htm",
+        "retrieved_at": "2026-01-15T15:00:01Z",
+        "effective_date": "2025-06-30",
+        "units": "USD",
+        "parser_version": "0.1.0",
+        "confidence": "0.98",
+        "warnings": [
+          "Dated issuer-reported public float; not current tradable free float."
+        ],
+        "source_record_id": "dei:EntityPublicFloat",
+        "excerpt": "Aggregate market value held by non-affiliates at the stated date."
+      }
+    }
+  ],
+  "partial_failures": [
+    {
+      "failure_id": "failure-company-facts-1",
+      "source_name": "SEC company facts",
+      "dataset": "shares_outstanding",
+      "code": "rate_limited",
+      "message": "Fixture simulates an HTTP 429 response.",
+      "occurred_at": "2026-01-15T15:00:01Z",
+      "retryable": true,
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000000001.json",
+      "warnings": [
+        "Successful filing evidence is retained."
+      ]
+    }
+  ]
+}
+

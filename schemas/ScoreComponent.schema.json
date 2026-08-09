@@ -1,0 +1,77 @@
+{
+  "$id": "https://raw.githubusercontent.com/Milk-Master-Mike/market-data-contracts/v0.1.0/schemas/ScoreComponent.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "contribution": {
+      "anyOf": [
+        {
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,6}0*$",
+          "type": "string"
+        }
+      ],
+      "title": "Contribution"
+    },
+    "evidence_ids": {
+      "default": [],
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Evidence Ids",
+      "type": "array"
+    },
+    "explanation": {
+      "minLength": 1,
+      "title": "Explanation",
+      "type": "string"
+    },
+    "name": {
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "value": {
+      "anyOf": [
+        {
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,6}0*$",
+          "type": "string"
+        }
+      ],
+      "title": "Value"
+    },
+    "weight": {
+      "anyOf": [
+        {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,6}0*$",
+          "type": "string"
+        }
+      ],
+      "title": "Weight"
+    }
+  },
+  "required": [
+    "name",
+    "weight",
+    "value",
+    "contribution",
+    "explanation"
+  ],
+  "title": "ScoreComponent",
+  "type": "object",
+  "x-contract-version": "0.1.0"
+}
