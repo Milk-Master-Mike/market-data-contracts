@@ -1,5 +1,7 @@
 # Market Data Contracts
 
+> **Archived:** This package now lives in [`market-research-platform`](https://github.com/Milk-Master-Mike/market-research-platform/tree/main/packages/market-data-contracts). Its full Git history was preserved in the monorepo.
+
 `market-data-contracts` is the shared, versioned boundary between independent
 market-research collectors and their consumers. It provides strict Pydantic v2
 models, generated JSON Schemas, sanitized examples, and deterministic fixtures.
